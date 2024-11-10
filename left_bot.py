@@ -99,7 +99,7 @@ async def process_callback(callback_query: types.CallbackQuery):
         course_keyboard = InlineKeyboardMarkup(row_width=2)
         course_keyboard.add(
             InlineKeyboardButton("Начать", callback_data="start_course"),
-            # InlineKeyboardButton("План", callback_data="plan_course")
+            InlineKeyboardButton("План", callback_data="plan_course")
         )
         await callback_query.answer("Пользователь принят")
 
@@ -606,10 +606,9 @@ async def lesson_23(callback_query: types.CallbackQuery):
 async def lesson_24(callback_query: types.CallbackQuery):
     lesson_24_kb = InlineKeyboardMarkup(row_width=2)
     lesson_24_kb.add(
-        InlineKeyboardButton("Оставить отзыв", callback_data="feedback")
+        InlineKeyboardButton("Оставить отзыв", callback_data="feedback"),
+        InlineKeyboardButton("Поддержать проект ❤️", callback_data="donat")
     )
-    # Text with description and link (escape special symbols for MarkdownV2 if necessary)
-    caption = """"""
 
     await bot.send_message(chat_id=callback_query.from_user.id,
                            text="""Поздравляю, вы успешно прошли наш мини-курс от ComfortZone!
@@ -639,7 +638,7 @@ async def lesson_24(callback_query: types.CallbackQuery):
 @dp.message_handler(state=FeedbackForm.waiting_for_feedback, content_types=types.ContentType.TEXT)
 async def process_feedback(message: types.Message, state: FSMContext):
     feedback_text = message.text
-    user_info = f"Отзыв от @{message.from_user.username} (ID: {message.from_user.id}):\n{feedback_text}"
+    user_info = f"Отзыв от @{message.from_user.username} (ID: {message.from_user.id}):\n\n{feedback_text}"
 
     # Отправляем отзыв администратору
     await bot.send_message('789614280', user_info)
@@ -649,6 +648,22 @@ async def process_feedback(message: types.Message, state: FSMContext):
 
     # Сбрасываем состояние
     await state.finish()
+
+
+@dp.callback_query_handler(lambda c: c.data == "donat")
+async def lesson_24(callback_query: types.CallbackQuery):
+    await callback_query.message.answer("""
+Вот текст для сообщения после нажатия кнопки доната:
+
+Спасибо за поддержку! 🙏
+
+Ваш вклад помогает нам развивать бота, добавлять новые функции и улучшать сервис для вас. Если хотите внести донат. 
+Мы благодарны каждому, кто поддерживает наш проект!
+
+Сбербанк
+2202 2068 3313 3031
+Мансур Т.""")
+
 
 
 if __name__ == '__main__':
