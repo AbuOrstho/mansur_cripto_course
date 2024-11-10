@@ -135,6 +135,58 @@ async def start_course_handler(callback_query: types.CallbackQuery):
     await callback_query.answer()
 
 
+# Обработчик для нажатия кнопки "План"
+@dp.callback_query_handler(lambda c: c.data == "plan_course")
+async def start_course_handler(callback_query: types.CallbackQuery):
+    await callback_query.message.answer("""План:
+
+- Структура курса 
+
+- Что ты получишь на обучении?
+
+- Словарь
+
+- «Инвестирование - базовая задача в современном обществе»
+
+- Топ 5 плохих способов инвестиций 
+
+- Мои действия, если бы я только сейчас захотел зайти в крипту 
+
+- Главные ошибки новичков в трейдинге
+
+- 5 принципов успешного трейдера 
+
+- Как в себе развить мышление проф. трейдера 
+
+Видео-уроки:
+- Кто такой трейдер и почему данная профессия привлекательна?
+- Криптовалютный рынок 
+- Форекс рынок
+- Индексы
+- Словарь стрейдера 
+
+- Биржи
+- Инструменты 
+
+- Безопасность
+
+- Психология трейдера 
+- Риск менеджмент
+
+- Паттерны
+- Индикаторы
+
+- Smart Money
+
+- Фазы рынка и структура 
+- Ликвидность 
+
+- Вайкофф
+
+- Около крипта""")
+    await callback_query.answer()
+
+
 # Обработчики для каждого занятия
 async def lesson_1(callback_query: types.CallbackQuery):
     lesson_1_kb = InlineKeyboardMarkup(row_width=1)
